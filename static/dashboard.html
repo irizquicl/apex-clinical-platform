@@ -201,6 +201,13 @@
         .auto-table th { background: #F8FAFC; padding: 10px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--subtext); font-weight: 600; }
         .auto-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
         .auto-table tr:last-child td { border-bottom: none; }
+    
+        .ccm-filter { padding: 6px 12px; font-size: 12px; font-weight: 500; background: var(--card-bg); color: var(--subtext); border: 1px solid var(--border); border-radius: 999px; cursor: pointer; transition: all 0.2s; }
+        .ccm-filter:hover { background: rgba(99,102,241,0.08); color: var(--indigo); border-color: var(--indigo); }
+        .ccm-filter.active { background: var(--indigo); color: white; border-color: var(--indigo); }
+        #ccm-screener-table th { cursor: pointer; user-select: none; }
+        #ccm-screener-table th:hover { color: var(--indigo); }
+
     </style>
 </head>
 <body>
@@ -244,6 +251,7 @@
             <li class="nav-item" onclick="showView(this,'readiness-view')">📊 Revisit Readiness</li>
             <li class="nav-item" onclick="showView(this,'poc-command-view')">📋 POC Command</li>
             <li class="nav-item" onclick="showView(this,'training-view')">💉 Staff Training</li>
+            <li class="nav-item" onclick="showView(this,'ccm-screener-view')">💊 CCM Screener</li>
             <li class="nav-item" onclick="showView(this,'enforcement-view')" style="color: var(--red); font-weight: 600;">🚨 Enforcement Tracker</li>
         </ul>
 
@@ -2725,6 +2733,147 @@ Ellicott City Healthcare Center</div>
             </div>
         </div>
 
+
+        <!-- ==================== CCM SCREENER VIEW ==================== -->
+        <div id="ccm-screener-view" style="display: none; flex-direction: column; gap: 30px;">
+
+            <!-- ACCESS Model Banner -->
+            <div class="survey-banner" style="background: linear-gradient(90deg, #6366F1 0%, #4F46E5 100%); color: white; padding: 14px 20px; border-radius: var(--radius); font-weight: 600; text-align: center; font-size: 14px;">
+                🚨 CMS ACCESS Model — Application deadline May 15, 2026 · <a href="https://www.cms.gov/priorities/innovation/innovation-models/access" target="_blank" style="color: #FDE68A; text-decoration: underline; font-weight: 700;">cms.gov/priorities/innovation/innovation-models/access</a>
+            </div>
+
+            <div class="section-header">
+                <h3>💊 CCM Eligibility Screener</h3>
+                <p>20 patients screened · <span style="color: var(--red); font-weight: 700;">16 not enrolled</span> · <span style="color: var(--green); font-weight: 700;">4 currently enrolled</span> · 2026 CMS CPT schedule</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>Total Eligible</span><span style="color: var(--indigo)">👥</span></div><div class="metric-value">20</div><div class="metric-trend trend-up">100% screened</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Currently Enrolled</span><span style="color: var(--green)">✅</span></div><div class="metric-value">4</div><div class="metric-trend trend-up">$676/mo active</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Monthly Revenue Gap</span><span style="color: var(--red)">❌</span></div><div class="metric-value" style="color: var(--red);">$3,128</div><div class="metric-trend trend-danger">16 patients unenrolled</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Projected Annual (All Enrolled)</span><span style="color: var(--green)">💰</span></div><div class="metric-value" style="color: var(--green);">$45,648</div><div class="metric-trend trend-up">+$37,536 vs today</div></div>
+            </div>
+
+            <!-- Filter Bar -->
+            <section>
+                <div class="section-header" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <h3>Patient Eligibility Matrix</h3>
+                        <p>Sorted by revenue opportunity — highest first · Click column headers to re-sort</p>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn ccm-filter active" data-filter="all" onclick="ccmFilter(this,'all')">All</button>
+                        <button class="btn ccm-filter" data-filter="not-enrolled" onclick="ccmFilter(this,'not-enrolled')">Not Enrolled</button>
+                        <button class="btn ccm-filter" data-filter="complex" onclick="ccmFilter(this,'complex')">Complex CCM</button>
+                        <button class="btn ccm-filter" data-filter="physician" onclick="ccmFilter(this,'physician')">Physician CCM</button>
+                        <button class="btn ccm-filter" data-filter="rpm" onclick="ccmFilter(this,'rpm')">RPM Eligible</button>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <table id="ccm-screener-table">
+                        <thead>
+                            <tr>
+                                <th style="cursor:pointer;" onclick="ccmSort(0,'str')">Patient · Room</th>
+                                <th style="cursor:pointer;" onclick="ccmSort(1,'num')">Age</th>
+                                <th style="cursor:pointer;" onclick="ccmSort(2,'num')"># Dx</th>
+                                <th>Conditions</th>
+                                <th style="cursor:pointer;" onclick="ccmSort(4,'str')">Status</th>
+                                <th>Recommended CPT</th>
+                                <th style="cursor:pointer;" onclick="ccmSort(6,'num')">Est. Monthly</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ccm-screener-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CPT Reference Panel -->
+            <section>
+                <div class="table-card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleCptPanel()">
+                        <div>
+                            <h3 style="font-size: 16px; font-weight: 600;">📘 2026 CMS CPT Code Reference — Chronic Care Management</h3>
+                            <p class="text-sm text-muted" style="margin-top: 4px;">Per-patient per-month rates · Medicare national average (non-facility)</p>
+                        </div>
+                        <span id="cptPanelToggle" style="font-size: 20px; color: var(--indigo); font-weight: 700;">−</span>
+                    </div>
+
+                    <div id="cptPanelBody" style="margin-top: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--indigo); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99490</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$66/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">CCM · 20+ min clinical staff time · ≥2 chronic conditions</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--indigo); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99439</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$50/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">CCM add-on · each add'l 20 min · max 2 units per month</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--red); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99487</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$144/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">Complex CCM · 60+ min · moderate/high complexity MDM</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--red); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99489</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$78/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">Complex CCM add-on · each add'l 30 min</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--amber); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99491</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$89/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">Physician CCM · 30+ min personally performed by MD/APP</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid var(--amber); padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99437</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$63/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">Physician CCM add-on · each add'l 30 min by MD/APP</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid #10B981; padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99445</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$34/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">RPM · 2–15 day device supply (new 2026 bracket)</div>
+                        </div>
+                        <div style="background: #F8FAFC; border-left: 4px solid #10B981; padding: 12px 14px; border-radius: 6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-weight: 700; font-size: 14px; color: var(--text);">99470</span>
+                                <span style="font-weight: 700; color: var(--green); font-size: 14px;">$25/mo</span>
+                            </div>
+                            <div class="text-xs text-muted" style="margin-top: 4px;">RPM · 10-min treatment management (new 2026)</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 14px; background: #EEF2FF; border-radius: 8px; border: 1px solid #C7D2FE;">
+                        <div style="font-size: 13px; color: #3730A3; font-weight: 600;">📋 Recommendation Logic</div>
+                        <div class="text-xs" style="color: #4338CA; margin-top: 6px; line-height: 1.6;">
+                            <strong>Complex</strong> (3+ chronic conditions OR moderate-high complexity MDM): 99487 + 99489 = <strong>$222/mo</strong><br>
+                            <strong>Moderate</strong> (2 chronic conditions, lower acuity): 99490 + 99439 = <strong>$116/mo</strong><br>
+                            <strong>Physician-driven</strong> (Ibrahim bills personally): 99491 + 99437 = <strong>$152/mo</strong><br>
+                            <strong>RPM add-on</strong> (vitals monitoring appropriate): 99445 + 99470 = <strong>+$59/mo</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
     </main>
 
     <!-- RIGHT PANEL -->
@@ -2849,7 +2998,7 @@ const fTagsData = [
 function showView(el, viewId) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
-    ['main-dashboard-view','ai-insights-view','revenue-view','risk-flags-view','care-plans-view','medications-view','quality-metrics-view','survey-view','audit-view','automation-view','enforcement-view','readiness-view','poc-command-view','training-view'].forEach(id => {
+    ['main-dashboard-view','ai-insights-view','revenue-view','risk-flags-view','care-plans-view','medications-view','quality-metrics-view','survey-view','audit-view','automation-view','enforcement-view','readiness-view','poc-command-view','training-view','ccm-screener-view'].forEach(id => {
         document.getElementById(id).style.display = id === viewId ? 'flex' : 'none';
     });
 }
@@ -2937,6 +3086,126 @@ function closePatientModal() {
     
     document.getElementById('calendarStrip').innerHTML = html;
 })();
+
+// ==================== CCM SCREENER ====================
+const ccmPatients = [
+    { name: "M. Johnson", room: 214, age: 78, conditions: ["DM Type 2","HTN","CKD Stage 3","CHF"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "R. Thompson", room: 108, age: 82, conditions: ["HTN","COPD","Atrial Fib"], complexity: "Moderate", status: "Not Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: true },
+    { name: "E. Williams", room: 301, age: 71, conditions: ["DM Type 2","HTN","Obesity","Depression"], complexity: "Complex", status: "Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: false },
+    { name: "A. Martinez", room: 215, age: 85, conditions: ["CKD Stage 4","HTN","Anemia"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "L. Davis", room: 112, age: 76, conditions: ["CHF","COPD","HTN"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "J. Wilson", room: 205, age: 69, conditions: ["DM Type 2","HTN"], complexity: "Moderate", status: "Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: false },
+    { name: "B. Anderson", room: 317, age: 88, conditions: ["Dementia","HTN","Hypothyroid"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: false },
+    { name: "C. Taylor", room: 103, age: 74, conditions: ["COPD","HTN","Anxiety"], complexity: "Moderate", status: "Not Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: true },
+    { name: "D. Thomas", room: 222, age: 80, conditions: ["CHF","CKD Stage 3","DM"], complexity: "Complex", status: "Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "F. Jackson", room: 115, age: 77, conditions: ["HTN","DM Type 2","Neuropathy"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: false },
+    { name: "G. White", room: 308, age: 83, conditions: ["Atrial Fib","CHF","HTN"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "H. Harris", room: 201, age: 72, conditions: ["COPD","DM","Depression"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "I. Martin", room: 119, age: 86, conditions: ["Dementia","CKD Stage 3","HTN"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: false },
+    { name: "K. Garcia", room: 212, age: 79, conditions: ["DM Type 2","HTN","Retinopathy"], complexity: "Moderate", status: "Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: false },
+    { name: "M. Lee", room: 314, age: 91, conditions: ["HTN","Osteoporosis","Hypothyroid"], complexity: "Moderate", status: "Not Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: false },
+    { name: "N. Brown", room: 107, age: 68, conditions: ["DM Type 2","Obesity","Sleep Apnea"], complexity: "Moderate", status: "Not Enrolled", cpt: "99490 + 99439", monthly: 116, rpm: true },
+    { name: "O. Jones", room: 219, age: 84, conditions: ["CHF","Atrial Fib","CKD"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "P. Miller", room: 311, age: 73, conditions: ["HTN","COPD","Anxiety","Depression"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "Q. Moore", room: 104, age: 77, conditions: ["DM Type 2","HTN","PVD"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true },
+    { name: "R. Clark", room: 208, age: 89, conditions: ["Dementia","HTN","CHF","Anemia"], complexity: "Complex", status: "Not Enrolled", cpt: "99487 + 99489", monthly: 222, rpm: true }
+];
+
+let ccmCurrentFilter = 'all';
+let ccmSortCol = 6;
+let ccmSortDir = -1; // -1 desc (highest revenue first), 1 asc
+let ccmSortType = 'num';
+
+function renderCcmScreener() {
+    const tbody = document.getElementById('ccm-screener-body');
+    if (!tbody) return;
+
+    let rows = ccmPatients.slice();
+
+    // Filter
+    if (ccmCurrentFilter === 'not-enrolled') {
+        rows = rows.filter(r => r.status === 'Not Enrolled');
+    } else if (ccmCurrentFilter === 'complex') {
+        rows = rows.filter(r => r.complexity === 'Complex');
+    } else if (ccmCurrentFilter === 'physician') {
+        // Physician CCM candidates = complex patients (where MD personally leads care coordination)
+        rows = rows.filter(r => r.complexity === 'Complex');
+    } else if (ccmCurrentFilter === 'rpm') {
+        rows = rows.filter(r => r.rpm === true);
+    }
+
+    // Sort
+    const keyMap = { 0: 'name', 1: 'age', 2: 'numDx', 4: 'status', 6: 'monthly' };
+    const key = keyMap[ccmSortCol] || 'monthly';
+    rows.sort((a, b) => {
+        let av, bv;
+        if (key === 'numDx') { av = a.conditions.length; bv = b.conditions.length; }
+        else { av = a[key]; bv = b[key]; }
+        if (ccmSortType === 'num') return (av - bv) * ccmSortDir;
+        return String(av).localeCompare(String(bv)) * ccmSortDir;
+    });
+
+    // Render
+    tbody.innerHTML = rows.map(p => {
+        const statusBadge = p.status === 'Enrolled'
+            ? '<span class="badge badge-green">✅ Enrolled</span>'
+            : '<span class="badge badge-red">❌ Not Enrolled</span>';
+        const action = p.status === 'Enrolled'
+            ? '<button class="btn btn-sm">Review</button>'
+            : '<button class="btn btn-sm" style="background: var(--indigo); color: white;">Enroll</button>';
+        const cptDisplay = p.complexity === 'Complex'
+            ? `<span class="badge badge-purple">${p.cpt}</span>`
+            : `<span class="badge badge-indigo">${p.cpt}</span>`;
+        const revColor = p.status === 'Enrolled' ? 'var(--green)' : 'var(--red)';
+        const revPrefix = p.status === 'Enrolled' ? '' : 'opp ';
+        const rpmIcon = p.rpm ? ' <span title="RPM Eligible" style="color: var(--indigo); font-size: 11px; font-weight: 700;">· RPM</span>' : '';
+        return `
+            <tr>
+                <td><div class="font-medium">${p.name}</div><div class="text-xs text-muted">Room ${p.room}${rpmIcon}</div></td>
+                <td>${p.age}</td>
+                <td><span class="badge badge-gray">${p.conditions.length}</span></td>
+                <td class="text-sm">${p.conditions.join(', ')}</td>
+                <td>${statusBadge}</td>
+                <td>${cptDisplay}</td>
+                <td style="color: ${revColor}; font-weight: 700;">${revPrefix}$${p.monthly}/mo</td>
+                <td>${action}</td>
+            </tr>`;
+    }).join('');
+}
+
+function ccmFilter(btn, filter) {
+    ccmCurrentFilter = filter;
+    document.querySelectorAll('.ccm-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCcmScreener();
+}
+
+function ccmSort(col, type) {
+    if (ccmSortCol === col) ccmSortDir = -ccmSortDir;
+    else { ccmSortCol = col; ccmSortDir = (type === 'num') ? -1 : 1; }
+    ccmSortType = type;
+    renderCcmScreener();
+}
+
+function toggleCptPanel() {
+    const body = document.getElementById('cptPanelBody');
+    const toggle = document.getElementById('cptPanelToggle');
+    if (!body) return;
+    if (body.style.display === 'none') {
+        body.style.display = 'grid';
+        toggle.textContent = '−';
+    } else {
+        body.style.display = 'none';
+        toggle.textContent = '+';
+    }
+}
+
+// Initial render on load
+document.addEventListener('DOMContentLoaded', renderCcmScreener);
+// Also render immediately (DOMContentLoaded may have already fired)
+renderCcmScreener();
+
+
 </script>
 
 </body>
