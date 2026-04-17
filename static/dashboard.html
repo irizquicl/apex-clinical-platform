@@ -228,12 +228,12 @@
         <div class="nav-section-label">Operations</div>
         <ul class="nav-menu">
             <li class="nav-item active" onclick="showView(this,'main-dashboard-view')">🏠 Census Overview</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">🧠 AI Insights</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">💰 Revenue Opportunities</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">⚠️ Risk Flags</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">📋 Care Plans</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">💊 Medications</li>
-            <li class="nav-item" onclick="showView(this,'main-dashboard-view')">📊 Quality Metrics</li>
+            <li class="nav-item" onclick="showView(this,'ai-insights-view')">🧠 AI Insights</li>
+            <li class="nav-item" onclick="showView(this,'revenue-view')">💰 Revenue Opportunities</li>
+            <li class="nav-item" onclick="showView(this,'risk-flags-view')">⚠️ Risk Flags</li>
+            <li class="nav-item" onclick="showView(this,'care-plans-view')">📋 Care Plans</li>
+            <li class="nav-item" onclick="showView(this,'medications-view')">💊 Medications</li>
+            <li class="nav-item" onclick="showView(this,'quality-metrics-view')">📊 Quality Metrics</li>
         </ul>
 
         <div class="nav-section-label">Compliance & Survey</div>
@@ -342,6 +342,493 @@
                         <div class="bar-row"><div class="bar-label"><span>Rehospitalization Rate — 11.2%</span><span class="text-muted">Target < 15%</span></div><div class="bar-track"><div class="bar-fill" style="width: 75%; background-color: var(--green);"></div></div></div>
                         <div class="bar-row"><div class="bar-label"><span>Pressure Ulcer Incidence — 1.8%</span><span class="text-muted">Target < 2.0%</span></div><div class="bar-track"><div class="bar-fill" style="width: 90%; background-color: var(--green);"></div></div></div>
                     </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== AI INSIGHTS VIEW ==================== -->
+        <div id="ai-insights-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="section-header">
+                <h3>🧠 AI Clinical Insights — Building A</h3>
+                <p>Updated 4 min ago · Pattern detection across 87 active charts</p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>Charts Analyzed</span><span style="color: var(--indigo)">📊</span></div><div class="metric-value">87</div><div class="metric-trend trend-up">100% coverage</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Patterns Detected</span><span style="color: var(--amber)">🔍</span></div><div class="metric-value">14</div><div class="metric-trend trend-warning">3 critical</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Readmit Risk ≥50%</span><span style="color: var(--red)">⚠️</span></div><div class="metric-value">9</div><div class="metric-trend trend-danger">Review today</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Documentation Gaps</span><span style="color: var(--amber)">📋</span></div><div class="metric-value">11</div><div class="metric-trend trend-warning">Action needed</div></div>
+            </div>
+
+            <section>
+                <div class="section-header"><h3>Chart Awareness — Top 5 Clinical Summaries</h3><p>AI-generated synopsis for highest-risk active charts</p></div>
+                <div class="feed-list">
+                    <div class="feed-item border-red"><div class="feed-time">Room 214 · M. Johnson · 74F · CHF Exacerbation</div>Recent 3 lb weight gain over 72h with BNP trend up (820→1,140). Lasix 40mg BID holding, but JVD mildly elevated on last exam. Risk: decompensation &lt; 7 days. Recommend: daily weights, BMP tomorrow, consider cardiology phone consult.</div>
+                    <div class="feed-item border-red"><div class="feed-time">Room 307 · L. Garcia · 81F · UTI + Delirium</div>Acute mental status change noted on 11pm shift. UA positive leuk esterase, urine culture pending. Currently on Ceftriaxone 1g IV daily (day 2). Confusion unchanged overnight. Watch for sepsis: SIRS 1/4 currently.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">Room 118 · R. Patel · 68M · Post-op Hip</div>POD #8 from right THA. Incision clean, drains out. Ambulating 50 ft with walker ×2 daily. PT goal: 100 ft by Mar 10. Discharge planning: daughter's home, needs DME (raised toilet, shower bench).</div>
+                    <div class="feed-item border-amber"><div class="feed-time">Room 205 · B. Williams · 77M · COPD</div>O2 requirements increased from 2L → 3L nasal cannula over 48h. Wheezing on exam, productive cough. Sputum culture sent. Started on Solu-Medrol taper and Duonebs Q4. Monitor for response by Mar 6.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">Room 109 · C. Davis · 62F · DM2 + Stage 3 sacral wound</div>Wound measurements stable at 4.2×3.1×0.8 cm. A1c last drawn 8.6%. Basal-bolus insulin adjusted after 3 finger sticks &gt;300. Wound care Q2 days, next dressing change Mar 5.</div>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Pattern Detection</h3><p>Cross-chart trends identified by the AI layer</p></div>
+                <div class="feed-list">
+                    <div class="feed-item border-red"><div class="feed-time">⚠️ Readmission Pattern · Confidence 91%</div>3 patients with CHF showing weight gain trend over past 72h (Johnson +3.0 lb, Williams +2.2 lb, Foster +1.8 lb). Historical readmit risk in this cohort: 34%. Recommend: diuretic review + daily weights protocol.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">🧫 Infection Cluster · Confidence 78%</div>4 UTI diagnoses in the past 10 days, all on 3rd-floor wing. Consider environmental/catheter-care audit. Current catheter prevalence rate: 11% (benchmark &lt;7%).</div>
+                    <div class="feed-item border-amber"><div class="feed-time">💊 Medication Signal · Confidence 85%</div>6 patients on ≥3 CNS-acting meds. Fall risk score elevated in 4 of 6. Consider pharmacist-led DRR and gradual dose reduction where indicated.</div>
+                    <div class="feed-item border-indigo"><div class="feed-time">🥗 Nutrition Signal · Confidence 72%</div>5 residents with &gt;5% weight loss in 30 days. RD consult automatically flagged for Rooms 312, 401, 208, 119, 303.</div>
+                </div>
+            </section>
+
+            <section>
+                <div class="qapi-card">
+                    <div class="section-header"><h3>30-Day Readmission Probability — Top 10</h3><p>Predictive model output (logistic regression on LACE + utilization + comorbidity index)</p></div>
+                    <div class="bar-chart">
+                        <div class="bar-row"><div class="bar-label"><span>M. Johnson · Rm 214 · CHF</span><span class="text-muted">78%</span></div><div class="bar-track"><div class="bar-fill" style="width: 78%; background-color: var(--red);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>L. Garcia · Rm 307 · UTI/Delirium</span><span class="text-muted">71%</span></div><div class="bar-track"><div class="bar-fill" style="width: 71%; background-color: var(--red);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>B. Williams · Rm 205 · COPD</span><span class="text-muted">63%</span></div><div class="bar-track"><div class="bar-fill" style="width: 63%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>E. Foster · Rm 222 · CHF + CKD</span><span class="text-muted">59%</span></div><div class="bar-track"><div class="bar-fill" style="width: 59%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>A. Thompson · Rm 312 · Dementia/Agitation</span><span class="text-muted">52%</span></div><div class="bar-track"><div class="bar-fill" style="width: 52%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>C. Davis · Rm 109 · DM2/Wound</span><span class="text-muted">47%</span></div><div class="bar-track"><div class="bar-fill" style="width: 47%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>R. Patel · Rm 118 · Post-op Hip</span><span class="text-muted">38%</span></div><div class="bar-track"><div class="bar-fill" style="width: 38%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>H. Martinez · Rm 401 · CVA Rehab</span><span class="text-muted">29%</span></div><div class="bar-track"><div class="bar-fill" style="width: 29%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>D. Nguyen · Rm 211 · Pneumonia (recovering)</span><span class="text-muted">24%</span></div><div class="bar-track"><div class="bar-fill" style="width: 24%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>S. Okafor · Rm 108 · Hip Fx post-op</span><span class="text-muted">19%</span></div><div class="bar-track"><div class="bar-fill" style="width: 19%; background-color: var(--green);"></div></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Documentation Gaps — Missing Required Assessments</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Room</th><th>Patient</th><th>Missing Item</th><th>Days Overdue</th><th>Severity</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td>214</td><td class="font-medium">M. Johnson</td><td>14-day MDS assessment</td><td>3</td><td><span class="badge badge-red">Critical</span></td><td><button class="btn">Generate Draft</button></td></tr>
+                            <tr><td>312</td><td class="font-medium">A. Thompson</td><td>Behavior baseline reassessment</td><td>6</td><td><span class="badge badge-amber">High</span></td><td><button class="btn">Generate Draft</button></td></tr>
+                            <tr><td>109</td><td class="font-medium">C. Davis</td><td>Wound measurement (weekly)</td><td>2</td><td><span class="badge badge-amber">High</span></td><td><button class="btn">Generate Draft</button></td></tr>
+                            <tr><td>208</td><td class="font-medium">J. Nakamura</td><td>Nutrition care plan update</td><td>4</td><td><span class="badge badge-amber">High</span></td><td><button class="btn">Generate Draft</button></td></tr>
+                            <tr><td>401</td><td class="font-medium">H. Martinez</td><td>Annual Wellness Visit</td><td>12</td><td><span class="badge badge-amber">Moderate</span></td><td><button class="btn">Schedule</button></td></tr>
+                            <tr><td>205</td><td class="font-medium">B. Williams</td><td>Advance directive reconciliation</td><td>8</td><td><span class="badge badge-amber">Moderate</span></td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>118</td><td class="font-medium">R. Patel</td><td>Discharge planning note</td><td>1</td><td><span class="badge badge-gray">Low</span></td><td><button class="btn">Generate Draft</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== REVENUE OPPORTUNITIES VIEW ==================== -->
+        <div id="revenue-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="section-header">
+                <h3>💰 Revenue Opportunities — This Week</h3>
+                <p>Total potential this week: <span style="color: var(--green); font-weight: 700;">$4,280</span> · YTD captured <span style="color: var(--green); font-weight: 700;">$142,800</span> · YTD missed <span style="color: var(--red); font-weight: 700;">$28,450</span></p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>This Week Potential</span><span style="color: var(--green)">💵</span></div><div class="metric-value">$4,280</div><div class="metric-trend trend-up">↑$612 vs last week</div></div>
+                <div class="metric-card"><div class="metric-header"><span>CCM Recurring</span><span style="color: var(--indigo)">🔄</span></div><div class="metric-value">$1,100/mo</div><div class="metric-trend trend-up">12 patients pipeline</div></div>
+                <div class="metric-card"><div class="metric-header"><span>YTD Captured</span><span style="color: var(--green)">✅</span></div><div class="metric-value">$142,800</div><div class="metric-trend trend-up">83% capture rate</div></div>
+                <div class="metric-card"><div class="metric-header"><span>YTD Missed</span><span style="color: var(--red)">❌</span></div><div class="metric-value">$28,450</div><div class="metric-trend trend-danger">17% leak</div></div>
+            </div>
+
+            <section>
+                <div class="section-header"><h3>Opportunity Grid — Active Billable Workflows</h3></div>
+                <div class="revenue-grid">
+                    <div class="revenue-card"><div class="rev-header"><span class="rev-title">TCM Billing (99495/99496)</span><span class="rev-amount">$932</span></div><div class="rev-subtitle">3 patients eligible post-discharge</div><div class="rev-desc">Transitional Care Management — window closes in 30 days from discharge.</div><button class="btn rev-action">Open Tracker</button></div>
+                    <div class="revenue-card"><div class="rev-header"><span class="rev-title">G2211 Complexity Add-On</span><span class="rev-amount">$1,840</span></div><div class="rev-subtitle">8 qualifying visits this week</div><div class="rev-desc">Complex chronic care add-on for E&amp;M visits serving as the focal point for ongoing care.</div><button class="btn rev-action">Review Visits</button></div>
+                    <div class="revenue-card"><div class="rev-header"><span class="rev-title">CCM Enrollment (99490/99439)</span><span class="rev-amount">$1,100/mo</span></div><div class="rev-subtitle">12 patients qualify</div><div class="rev-desc">Chronic Care Management for patients with ≥2 chronic conditions expected to last ≥12 months.</div><button class="btn rev-action">Open Pipeline</button></div>
+                    <div class="revenue-card"><div class="rev-header"><span class="rev-title">Annual Wellness Visits (G0438/G0439)</span><span class="rev-amount">$408</span></div><div class="rev-subtitle">4 patients overdue &gt;12 months</div><div class="rev-desc">Medicare AWV overdue — Rooms 312, 109, 401, 208.</div><button class="btn rev-action">Schedule</button></div>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>TCM Billing Tracker</h3><p>30-day window from discharge · Face-to-face within 7 (99496) or 14 (99495) days</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Discharge Date</th><th>F2F Done</th><th>Code</th><th>Deadline</th><th>Amount</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>Feb 18</td><td>Feb 20 ✅</td><td>99496</td><td>Mar 8</td><td>$280</td><td><span class="badge badge-amber">Bill by Mar 8</span></td></tr>
+                            <tr><td class="font-medium">R. Patel</td><td>118</td><td>Feb 24</td><td>Feb 28 ✅</td><td>99495</td><td>Mar 14</td><td>$199</td><td><span class="badge badge-green">Ready to bill</span></td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>Feb 25</td><td>Pending</td><td>99496</td><td>Mar 4</td><td>$280</td><td><span class="badge badge-red">F2F due today</span></td></tr>
+                            <tr><td class="font-medium">D. Nguyen</td><td>211</td><td>Mar 1</td><td>Mar 3 ✅</td><td>99495</td><td>Mar 29</td><td>$173</td><td><span class="badge badge-gray">Pending docs</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>G2211 Complexity Add-On — Qualifying Visits This Week</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Visit Date</th><th>E&amp;M Code</th><th>Primary Dx</th><th>Add-On Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>Mar 3</td><td>99308</td><td>CHF</td><td>$230</td></tr>
+                            <tr><td class="font-medium">L. Garcia</td><td>307</td><td>Mar 3</td><td>99309</td><td>UTI + Delirium</td><td>$230</td></tr>
+                            <tr><td class="font-medium">B. Williams</td><td>205</td><td>Mar 3</td><td>99308</td><td>COPD</td><td>$230</td></tr>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>Mar 4</td><td>99308</td><td>Dementia</td><td>$230</td></tr>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>Mar 4</td><td>99309</td><td>DM2 + wound</td><td>$230</td></tr>
+                            <tr><td class="font-medium">H. Martinez</td><td>401</td><td>Mar 4</td><td>99307</td><td>CVA rehab</td><td>$230</td></tr>
+                            <tr><td class="font-medium">R. Patel</td><td>118</td><td>Mar 5</td><td>99308</td><td>Post-op hip</td><td>$230</td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>Mar 5</td><td>99309</td><td>CHF + CKD</td><td>$230</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>CCM Enrollment Pipeline</h3><p>≥2 chronic conditions · 20+ min/month non-face-to-face care coordination</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Chronic Conditions</th><th>Monthly Value</th><th>Status</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>CHF, CKD3, HTN</td><td>$92</td><td><span class="badge badge-amber">Consent pending</span></td><td><button class="btn btn-sm">Send Consent</button></td></tr>
+                            <tr><td class="font-medium">B. Williams</td><td>205</td><td>COPD, DM2, HTN</td><td>$92</td><td><span class="badge badge-green">Enrolled</span></td><td><button class="btn btn-sm">Log Time</button></td></tr>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>Dementia, HTN, depression</td><td>$92</td><td><span class="badge badge-green">Enrolled</span></td><td><button class="btn btn-sm">Log Time</button></td></tr>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>DM2, PVD, CKD3</td><td>$92</td><td><span class="badge badge-amber">Consent pending</span></td><td><button class="btn btn-sm">Send Consent</button></td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>CHF, CKD4, afib</td><td>$92</td><td><span class="badge badge-green">Enrolled</span></td><td><button class="btn btn-sm">Log Time</button></td></tr>
+                            <tr><td class="font-medium">J. Nakamura</td><td>208</td><td>DM2, CAD, HTN</td><td>$92</td><td><span class="badge badge-green">Enrolled</span></td><td><button class="btn btn-sm">Log Time</button></td></tr>
+                            <tr><td class="font-medium">H. Martinez</td><td>401</td><td>CVA, HTN, DM2</td><td>$92</td><td><span class="badge badge-amber">Consent pending</span></td><td><button class="btn btn-sm">Send Consent</button></td></tr>
+                            <tr><td class="font-medium">K. Rivera</td><td>119</td><td>CKD3, HTN, afib</td><td>$92</td><td><span class="badge badge-gray">Eligible — not offered</span></td><td><button class="btn btn-sm">Offer</button></td></tr>
+                            <tr><td class="font-medium">P. O'Brien</td><td>303</td><td>Parkinson's, HTN</td><td>$92</td><td><span class="badge badge-gray">Eligible — not offered</span></td><td><button class="btn btn-sm">Offer</button></td></tr>
+                            <tr><td class="font-medium">S. Okafor</td><td>108</td><td>Hip fx post-op, DM2</td><td>$92</td><td><span class="badge badge-gray">Eligible — not offered</span></td><td><button class="btn btn-sm">Offer</button></td></tr>
+                            <tr><td class="font-medium">T. Jefferson</td><td>216</td><td>CHF, COPD, DM2</td><td>$92</td><td><span class="badge badge-gray">Eligible — not offered</span></td><td><button class="btn btn-sm">Offer</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>AWV Tracker — Overdue Patients</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Last AWV</th><th>Months Overdue</th><th>Code</th><th>Amount</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>Jan 2025</td><td>14</td><td>G0439</td><td>$102</td><td><button class="btn btn-sm">Schedule</button></td></tr>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>Feb 2025</td><td>13</td><td>G0439</td><td>$102</td><td><button class="btn btn-sm">Schedule</button></td></tr>
+                            <tr><td class="font-medium">H. Martinez</td><td>401</td><td>Dec 2024</td><td>15</td><td>G0439</td><td>$102</td><td><button class="btn btn-sm">Schedule</button></td></tr>
+                            <tr><td class="font-medium">J. Nakamura</td><td>208</td><td>Feb 2025</td><td>13</td><td>G0439</td><td>$102</td><td><button class="btn btn-sm">Schedule</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="qapi-card">
+                    <div class="section-header"><h3>YTD Revenue Capture — Captured vs Missed</h3></div>
+                    <div class="bar-chart">
+                        <div class="bar-row"><div class="bar-label"><span>TCM · $38,400 captured</span><span class="text-muted">$6,200 missed</span></div><div class="bar-track"><div class="bar-fill" style="width: 86%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>G2211 · $42,300 captured</span><span class="text-muted">$11,500 missed</span></div><div class="bar-track"><div class="bar-fill" style="width: 79%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>CCM · $51,700 captured</span><span class="text-muted">$7,800 missed</span></div><div class="bar-track"><div class="bar-fill" style="width: 87%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>AWV · $10,400 captured</span><span class="text-muted">$2,950 missed</span></div><div class="bar-track"><div class="bar-fill" style="width: 78%; background-color: var(--amber);"></div></div></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== RISK FLAGS VIEW ==================== -->
+        <div id="risk-flags-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="survey-banner" style="background-color: var(--red);">
+                🚨 URGENT ACTIONS REQUIRED — 2 Critical patients &gt;48h without visit: M. Johnson (Rm 214) · L. Garcia (Rm 307)
+            </div>
+            <div class="section-header">
+                <h3>⚠️ Risk Flags — All Active Patients</h3>
+                <p>24 patients flagged across 87-bed census · Risk model: LACE + comorbidity + acute signals</p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>Critical</span><span style="color: var(--red)">🔴</span></div><div class="metric-value">4</div><div class="metric-trend trend-danger">Immediate action</div></div>
+                <div class="metric-card"><div class="metric-header"><span>High</span><span style="color: var(--amber)">🟠</span></div><div class="metric-value">9</div><div class="metric-trend trend-warning">24h review</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Moderate</span><span style="color: var(--amber)">🟡</span></div><div class="metric-value">8</div><div class="metric-trend trend-warning">48h review</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Low</span><span style="color: var(--green)">🟢</span></div><div class="metric-value">3</div><div class="metric-trend trend-up">Routine</div></div>
+            </div>
+
+            <section>
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div><h3>Filters</h3></div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-sm">All</button>
+                        <button class="btn btn-sm btn-red">Critical</button>
+                        <button class="btn btn-sm btn-amber">High</button>
+                        <button class="btn btn-sm" style="background: var(--amber);">Moderate</button>
+                        <button class="btn btn-sm btn-green">Low</button>
+                        <span style="width: 1px; background: var(--border);"></span>
+                        <button class="btn btn-sm" style="background:#64748B;">Fall Risk</button>
+                        <button class="btn btn-sm" style="background:#64748B;">Wound</button>
+                        <button class="btn btn-sm" style="background:#64748B;">Infection</button>
+                        <button class="btn btn-sm" style="background:#64748B;">Nutrition</button>
+                        <button class="btn btn-sm" style="background:#64748B;">Medication</button>
+                        <button class="btn btn-sm" style="background:#64748B;">Readmission</button>
+                        <button class="btn btn-sm btn-green">⬇️ Export CSV</button>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Room</th><th>Patient</th><th>Risk</th><th>Score</th><th>Flags</th><th>Days Since Visit</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td>214</td><td class="font-medium">M. Johnson</td><td><span class="badge badge-red">Critical</span></td><td>92</td><td class="text-sm">Readmission, Medication</td><td style="color:var(--red); font-weight:600;">3d</td><td><button class="btn btn-red">Urgent Review</button></td></tr>
+                            <tr><td>307</td><td class="font-medium">L. Garcia</td><td><span class="badge badge-red">Critical</span></td><td>87</td><td class="text-sm">Infection, Fall Risk</td><td style="color:var(--red); font-weight:600;">3d</td><td><button class="btn btn-red">Urgent Review</button></td></tr>
+                            <tr><td>222</td><td class="font-medium">E. Foster</td><td><span class="badge badge-red">Critical</span></td><td>84</td><td class="text-sm">Readmission, Medication</td><td>1d</td><td><button class="btn btn-red">Urgent Review</button></td></tr>
+                            <tr><td>216</td><td class="font-medium">T. Jefferson</td><td><span class="badge badge-red">Critical</span></td><td>81</td><td class="text-sm">Readmission, Nutrition</td><td>2d</td><td><button class="btn btn-red">Urgent Review</button></td></tr>
+                            <tr><td>205</td><td class="font-medium">B. Williams</td><td><span class="badge badge-amber">High</span></td><td>68</td><td class="text-sm">Medication, Readmission</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>118</td><td class="font-medium">R. Patel</td><td><span class="badge badge-amber">High</span></td><td>66</td><td class="text-sm">Fall Risk, Medication</td><td>3d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>312</td><td class="font-medium">A. Thompson</td><td><span class="badge badge-amber">High</span></td><td>64</td><td class="text-sm">Fall Risk, Medication</td><td>4d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>109</td><td class="font-medium">C. Davis</td><td><span class="badge badge-amber">High</span></td><td>62</td><td class="text-sm">Wound, Nutrition</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>208</td><td class="font-medium">J. Nakamura</td><td><span class="badge badge-amber">High</span></td><td>58</td><td class="text-sm">Nutrition, Medication</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>119</td><td class="font-medium">K. Rivera</td><td><span class="badge badge-amber">High</span></td><td>56</td><td class="text-sm">Readmission, Nutrition</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>303</td><td class="font-medium">P. O'Brien</td><td><span class="badge badge-amber">High</span></td><td>55</td><td class="text-sm">Fall Risk</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>108</td><td class="font-medium">S. Okafor</td><td><span class="badge badge-amber">High</span></td><td>54</td><td class="text-sm">Fall Risk, Wound</td><td>3d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>220</td><td class="font-medium">M. Chen</td><td><span class="badge badge-amber">High</span></td><td>52</td><td class="text-sm">Medication</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>211</td><td class="font-medium">D. Nguyen</td><td style="color:#92400E"><span class="badge badge-amber">Moderate</span></td><td>48</td><td class="text-sm">Infection (resolving)</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>401</td><td class="font-medium">H. Martinez</td><td><span class="badge badge-amber">Moderate</span></td><td>44</td><td class="text-sm">Fall Risk</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>112</td><td class="font-medium">G. Santos</td><td><span class="badge badge-amber">Moderate</span></td><td>42</td><td class="text-sm">Wound</td><td>3d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>319</td><td class="font-medium">V. Petrova</td><td><span class="badge badge-amber">Moderate</span></td><td>41</td><td class="text-sm">Nutrition</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>124</td><td class="font-medium">F. Abrams</td><td><span class="badge badge-amber">Moderate</span></td><td>39</td><td class="text-sm">Medication</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>227</td><td class="font-medium">N. Rossi</td><td><span class="badge badge-amber">Moderate</span></td><td>37</td><td class="text-sm">Fall Risk</td><td>4d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>315</td><td class="font-medium">O. Brennan</td><td><span class="badge badge-amber">Moderate</span></td><td>36</td><td class="text-sm">Medication</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>203</td><td class="font-medium">W. Tanaka</td><td><span class="badge badge-amber">Moderate</span></td><td>34</td><td class="text-sm">Wound (healing)</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>310</td><td class="font-medium">I. Kapoor</td><td><span class="badge badge-green">Low</span></td><td>28</td><td class="text-sm">Routine</td><td>2d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>117</td><td class="font-medium">Q. Barnes</td><td><span class="badge badge-green">Low</span></td><td>24</td><td class="text-sm">Routine</td><td>3d</td><td><button class="btn">Review</button></td></tr>
+                            <tr><td>228</td><td class="font-medium">Z. Ali</td><td><span class="badge badge-green">Low</span></td><td>19</td><td class="text-sm">Routine</td><td>1d</td><td><button class="btn">Review</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== CARE PLANS VIEW ==================== -->
+        <!-- ==================== CARE PLANS VIEW ==================== -->
+        <div id="care-plans-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="section-header">
+                <h3>📋 Care Plan Compliance</h3>
+                <p>87 active care plans · 11 overdue · 9 due this week · Next review cycle starts Mar 9</p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>On Track</span><span style="color: var(--green)">✅</span></div><div class="metric-value">67</div><div class="metric-trend trend-up">77% of census</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Due This Week</span><span style="color: var(--amber)">⏰</span></div><div class="metric-value">9</div><div class="metric-trend trend-warning">Schedule reviews</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Overdue</span><span style="color: var(--red)">❌</span></div><div class="metric-value">11</div><div class="metric-trend trend-danger">F656/F657 risk</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Avg Days to Review</span><span style="color: var(--indigo)">📅</span></div><div class="metric-value">84</div><div class="metric-trend trend-up">Target ≤ 90</div></div>
+            </div>
+
+            <section>
+                <div class="section-header"><h3>Care Plans Due This Week</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Plan Type</th><th>Due By</th><th>IDT Scheduled</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>Comprehensive (quarterly)</td><td>Mar 6</td><td>Mar 5 · 10:00 AM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                            <tr><td class="font-medium">R. Patel</td><td>118</td><td>Post-op / Rehab</td><td>Mar 6</td><td>Not scheduled</td><td><button class="btn btn-sm btn-amber">Schedule IDT</button></td></tr>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>Behavioral / Dementia</td><td>Mar 7</td><td>Mar 6 · 2:00 PM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>Wound + DM2</td><td>Mar 7</td><td>Mar 6 · 2:30 PM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                            <tr><td class="font-medium">B. Williams</td><td>205</td><td>Respiratory / COPD</td><td>Mar 8</td><td>Not scheduled</td><td><button class="btn btn-sm btn-amber">Schedule IDT</button></td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>Comprehensive (quarterly)</td><td>Mar 8</td><td>Mar 7 · 11:00 AM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                            <tr><td class="font-medium">H. Martinez</td><td>401</td><td>Rehab / Discharge</td><td>Mar 9</td><td>Mar 9 · 1:00 PM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                            <tr><td class="font-medium">J. Nakamura</td><td>208</td><td>Nutrition / RD</td><td>Mar 9</td><td>Not scheduled</td><td><button class="btn btn-sm btn-amber">Schedule IDT</button></td></tr>
+                            <tr><td class="font-medium">K. Rivera</td><td>119</td><td>Comprehensive (quarterly)</td><td>Mar 10</td><td>Mar 10 · 10:00 AM</td><td><button class="btn btn-sm">Open</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>All Care Plans — Compliance Tracker</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Plan Type</th><th>Last Updated</th><th>Next Review</th><th>Status</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">L. Garcia</td><td>307</td><td>Acute change (UTI)</td><td>Dec 10, 2025</td><td>Feb 27, 2026</td><td><span class="badge badge-red">Overdue 6d</span></td><td><button class="btn btn-sm btn-red">Update Now</button></td></tr>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">T. Jefferson</td><td>216</td><td>Comprehensive</td><td>Nov 28, 2025</td><td>Feb 26, 2026</td><td><span class="badge badge-red">Overdue 7d</span></td><td><button class="btn btn-sm btn-red">Update Now</button></td></tr>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">S. Okafor</td><td>108</td><td>Post-op Hip Fx</td><td>Dec 1, 2025</td><td>Mar 1, 2026</td><td><span class="badge badge-red">Overdue 4d</span></td><td><button class="btn btn-sm btn-red">Update Now</button></td></tr>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">G. Santos</td><td>112</td><td>Wound care</td><td>Nov 20, 2025</td><td>Feb 20, 2026</td><td><span class="badge badge-red">Overdue 13d</span></td><td><button class="btn btn-sm btn-red">Update Now</button></td></tr>
+                            <tr><td class="font-medium">D. Nguyen</td><td>211</td><td>Pneumonia / recovering</td><td>Feb 15, 2026</td><td>Mar 15, 2026</td><td><span class="badge badge-green">On Track</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">V. Petrova</td><td>319</td><td>Nutrition / RD</td><td>Feb 10, 2026</td><td>Mar 12, 2026</td><td><span class="badge badge-amber">Due Soon</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">P. O'Brien</td><td>303</td><td>Parkinson's / mobility</td><td>Feb 3, 2026</td><td>Mar 14, 2026</td><td><span class="badge badge-amber">Due Soon</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">I. Kapoor</td><td>310</td><td>Routine comprehensive</td><td>Feb 1, 2026</td><td>May 1, 2026</td><td><span class="badge badge-green">On Track</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">Q. Barnes</td><td>117</td><td>Routine comprehensive</td><td>Jan 30, 2026</td><td>Apr 30, 2026</td><td><span class="badge badge-green">On Track</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">Z. Ali</td><td>228</td><td>Routine comprehensive</td><td>Jan 28, 2026</td><td>Apr 28, 2026</td><td><span class="badge badge-green">On Track</span></td><td><button class="btn btn-sm">View</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== MEDICATIONS VIEW ==================== -->
+        <div id="medications-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="section-header">
+                <h3>💊 Medication Safety Monitor</h3>
+                <p>High-risk medication oversight · Drug regimen review · Pharmacist-led surveillance</p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>On Anticoagulation</span><span style="color: var(--red)">🩸</span></div><div class="metric-value">11</div><div class="metric-trend trend-warning">2 INR overdue</div></div>
+                <div class="metric-card"><div class="metric-header"><span>On Insulin</span><span style="color: var(--indigo)">💉</span></div><div class="metric-value">14</div><div class="metric-trend trend-up">3 BG &gt;300 today</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Polypharmacy (&gt;10 meds)</span><span style="color: var(--amber)">💊</span></div><div class="metric-value">22</div><div class="metric-trend trend-warning">DRR recommended</div></div>
+                <div class="metric-card"><div class="metric-header"><span>New Starts (72h)</span><span style="color: var(--indigo)">🆕</span></div><div class="metric-value">7</div><div class="metric-trend trend-up">Follow-up due</div></div>
+            </div>
+
+            <section>
+                <div class="section-header"><h3>Anticoagulation Tracker</h3><p>Warfarin / DOAC / heparin surveillance with last lab value</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Agent</th><th>Indication</th><th>Last INR / Anti-Xa</th><th>Drawn</th><th>In Range?</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>Warfarin 5mg</td><td>Afib</td><td>INR 2.4</td><td>Mar 2</td><td><span class="badge badge-green">Yes</span></td><td><button class="btn btn-sm">Log</button></td></tr>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>Apixaban 5mg BID</td><td>Afib + CHF</td><td>Anti-Xa 180</td><td>Feb 28</td><td><span class="badge badge-green">Yes</span></td><td><button class="btn btn-sm">Log</button></td></tr>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">K. Rivera</td><td>119</td><td>Warfarin 3mg</td><td>Afib</td><td>INR 4.1</td><td>Feb 25</td><td><span class="badge badge-red">Supratherapeutic</span></td><td><button class="btn btn-sm btn-red">Hold + Call</button></td></tr>
+                            <tr style="background: #FEF3C7;"><td class="font-medium">T. Jefferson</td><td>216</td><td>Warfarin 4mg</td><td>DVT hx</td><td>INR 1.4</td><td>Feb 20</td><td><span class="badge badge-amber">Subtherapeutic + overdue</span></td><td><button class="btn btn-sm btn-amber">Redraw</button></td></tr>
+                            <tr><td class="font-medium">P. O'Brien</td><td>303</td><td>Rivaroxaban 20mg</td><td>Afib</td><td>N/A</td><td>—</td><td><span class="badge badge-gray">Trend only</span></td><td><button class="btn btn-sm">Review</button></td></tr>
+                            <tr style="background: #FEF3C7;"><td class="font-medium">H. Martinez</td><td>401</td><td>Warfarin 2.5mg</td><td>Post-CVA</td><td>—</td><td>Feb 18</td><td><span class="badge badge-amber">Overdue</span></td><td><button class="btn btn-sm btn-amber">Redraw</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Insulin Management</h3><p>Patients on scheduled or sliding-scale insulin</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Regimen</th><th>Last BG</th><th>Last A1c</th><th>Hypo (72h)</th><th>Hyper (72h)</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>Lantus 30U hs + Novolog SSI</td><td>312 mg/dL (0800)</td><td>8.6%</td><td>0</td><td>3</td><td><button class="btn btn-sm">Adjust</button></td></tr>
+                            <tr><td class="font-medium">B. Williams</td><td>205</td><td>Lantus 22U hs + Humalog SSI</td><td>184 mg/dL</td><td>7.4%</td><td>0</td><td>0</td><td><button class="btn btn-sm">Log</button></td></tr>
+                            <tr><td class="font-medium">J. Nakamura</td><td>208</td><td>70/30 15U BID</td><td>221 mg/dL</td><td>8.1%</td><td>0</td><td>1</td><td><button class="btn btn-sm">Log</button></td></tr>
+                            <tr style="background: #FEF2F2;"><td class="font-medium">T. Jefferson</td><td>216</td><td>Lantus 40U + sliding scale</td><td>58 mg/dL (0300)</td><td>9.2%</td><td>2</td><td>0</td><td><button class="btn btn-sm btn-red">Reduce basal</button></td></tr>
+                            <tr><td class="font-medium">S. Okafor</td><td>108</td><td>Novolog SSI only</td><td>156 mg/dL</td><td>6.9%</td><td>0</td><td>0</td><td><button class="btn btn-sm">Log</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Polypharmacy Alerts (&gt;10 concurrent meds)</h3></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Active Med Count</th><th>CNS-Acting</th><th>Anticholinergic Burden</th><th>Last DRR</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>14</td><td>4</td><td>High</td><td>Dec 2025</td><td><button class="btn btn-sm btn-amber">Request DRR</button></td></tr>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>13</td><td>2</td><td>Moderate</td><td>Feb 2026</td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">P. O'Brien</td><td>303</td><td>12</td><td>3</td><td>High</td><td>Jan 2026</td><td><button class="btn btn-sm btn-amber">Request DRR</button></td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>12</td><td>2</td><td>Moderate</td><td>Feb 2026</td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">K. Rivera</td><td>119</td><td>11</td><td>2</td><td>Moderate</td><td>Jan 2026</td><td><button class="btn btn-sm">View</button></td></tr>
+                            <tr><td class="font-medium">H. Martinez</td><td>401</td><td>11</td><td>3</td><td>High</td><td>Dec 2025</td><td><button class="btn btn-sm btn-amber">Request DRR</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>New Starts in Last 72 Hours</h3><p>Requires follow-up assessment for tolerance and effect</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Patient</th><th>Room</th><th>Medication</th><th>Indication</th><th>Started</th><th>Follow-up Due</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">L. Garcia</td><td>307</td><td>Ceftriaxone 1g IV daily</td><td>UTI</td><td>Mar 2</td><td>Mar 5 (day 3)</td></tr>
+                            <tr><td class="font-medium">B. Williams</td><td>205</td><td>Methylprednisolone taper</td><td>COPD exacerbation</td><td>Mar 1</td><td>Mar 4 (response)</td></tr>
+                            <tr><td class="font-medium">M. Johnson</td><td>214</td><td>Metolazone 2.5mg</td><td>CHF (volume overload)</td><td>Mar 3</td><td>Mar 4 (BMP)</td></tr>
+                            <tr><td class="font-medium">A. Thompson</td><td>312</td><td>Risperidone 0.25mg hs</td><td>Dementia-related behavior</td><td>Mar 1</td><td>Mar 4 (weekly behavior log)</td></tr>
+                            <tr><td class="font-medium">E. Foster</td><td>222</td><td>Metoprolol succinate 25mg</td><td>Afib rate</td><td>Mar 2</td><td>Mar 5 (HR/BP)</td></tr>
+                            <tr><td class="font-medium">C. Davis</td><td>109</td><td>Vancomycin PO 125mg QID</td><td>C. diff (suspected)</td><td>Mar 3</td><td>Mar 6 (stool PCR)</td></tr>
+                            <tr><td class="font-medium">R. Patel</td><td>118</td><td>Oxycodone 5mg Q6 PRN</td><td>Post-op pain</td><td>Mar 1</td><td>Mar 4 (pain + bowel)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Drug-Drug Interaction &amp; PRN Overuse Alerts</h3></div>
+                <div class="feed-list">
+                    <div class="feed-item border-red"><div class="feed-time">⚠️ Major Interaction · K. Rivera · Rm 119</div>Warfarin + newly added Bactrim DS — CYP2C9 inhibition, elevated bleed risk. Current INR 4.1. Recommend: hold warfarin ×1 dose, recheck INR in 24h, consider alternate antibiotic.</div>
+                    <div class="feed-item border-red"><div class="feed-time">⚠️ Major Interaction · A. Thompson · Rm 312</div>Risperidone + trazodone + mirtazapine — serotonergic &amp; sedative stacking. Already on quetiapine. Flag for DRR and fall-risk reassessment.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">🆘 PRN Overuse · R. Patel · Rm 118</div>Oxycodone 5mg used 4× in last 24h (POD #8 hip). Consider scheduled acetaminophen 650 Q6 + gabapentin adjunct. Monitor constipation; bowel regimen started.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">🆘 PRN Overuse · A. Thompson · Rm 312</div>Lorazepam 0.5mg used 3× in past 24h for agitation. Consider non-pharm first (environmental triggers, caregiver approach). Discuss gradual dose reduction.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">⚠️ Moderate Interaction · M. Johnson · Rm 214</div>Apixaban + verapamil — P-gp and CYP3A4 inhibition may raise apixaban levels. Renal function stable (CrCl 55). Monitor for bleed signs; no dose change required.</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== QUALITY METRICS VIEW ==================== -->
+        <div id="quality-metrics-view" style="display: none; flex-direction: column; gap: 30px;">
+            <div class="section-header">
+                <h3>📊 QAPI Dashboard — Building A</h3>
+                <p>Core quality indicators vs state (MD) and national benchmarks · 6-month trend</p>
+            </div>
+
+            <div class="top-metrics">
+                <div class="metric-card"><div class="metric-header"><span>Falls (per 1000 days)</span><span style="color: var(--amber)">📉</span></div><div class="metric-value">2.3</div><div class="metric-trend trend-warning">Target &lt; 2.0</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Rehospitalization</span><span style="color: var(--green)">🏥</span></div><div class="metric-value">11.2%</div><div class="metric-trend trend-up">Nat'l 22.1%</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Pressure Ulcer</span><span style="color: var(--green)">🩹</span></div><div class="metric-value">1.8%</div><div class="metric-trend trend-up">Target &lt; 2.0%</div></div>
+                <div class="metric-card"><div class="metric-header"><span>Antipsychotic Use</span><span style="color: var(--amber)">💊</span></div><div class="metric-value">14.1%</div><div class="metric-trend trend-warning">Nat'l 14.3%</div></div>
+            </div>
+
+            <section>
+                <div class="qapi-card">
+                    <div class="section-header"><h3>Falls Rate — 6-Month Trend</h3><p>Falls per 1,000 resident days · Facility target &lt; 2.0 · State avg 2.6</p></div>
+                    <div class="bar-chart">
+                        <div class="bar-row"><div class="bar-label"><span>October 2025 — 3.1</span><span class="text-muted">above target</span></div><div class="bar-track"><div class="bar-fill" style="width: 100%; background-color: var(--red);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>November 2025 — 2.8</span><span class="text-muted">above target</span></div><div class="bar-track"><div class="bar-fill" style="width: 90%; background-color: var(--red);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>December 2025 — 2.6</span><span class="text-muted">above target</span></div><div class="bar-track"><div class="bar-fill" style="width: 84%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>January 2026 — 2.4</span><span class="text-muted">above target</span></div><div class="bar-track"><div class="bar-fill" style="width: 77%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>February 2026 — 2.3</span><span class="text-muted">above target</span></div><div class="bar-track"><div class="bar-fill" style="width: 74%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>March 2026 (MTD) — 2.1</span><span class="text-muted">improving</span></div><div class="bar-track"><div class="bar-fill" style="width: 68%; background-color: var(--amber);"></div></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="qapi-card">
+                    <div class="section-header"><h3>Rehospitalization Rate — 6-Month Trend</h3><p>30-day all-cause · Facility target &lt; 15% · State avg 19.4% · National 22.1%</p></div>
+                    <div class="bar-chart">
+                        <div class="bar-row"><div class="bar-label"><span>October 2025 — 14.8%</span><span class="text-muted">below target</span></div><div class="bar-track"><div class="bar-fill" style="width: 74%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>November 2025 — 13.6%</span><span class="text-muted">improving</span></div><div class="bar-track"><div class="bar-fill" style="width: 68%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>December 2025 — 12.9%</span><span class="text-muted">improving</span></div><div class="bar-track"><div class="bar-fill" style="width: 64%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>January 2026 — 12.1%</span><span class="text-muted">improving</span></div><div class="bar-track"><div class="bar-fill" style="width: 60%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>February 2026 — 11.5%</span><span class="text-muted">improving</span></div><div class="bar-track"><div class="bar-fill" style="width: 57%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>March 2026 (MTD) — 11.2%</span><span class="text-muted">best in 6 mo</span></div><div class="bar-track"><div class="bar-fill" style="width: 56%; background-color: var(--green);"></div></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="qapi-card">
+                    <div class="section-header"><h3>Core Metrics vs Benchmarks</h3></div>
+                    <div class="bar-chart">
+                        <div class="bar-row"><div class="bar-label"><span>Pressure Ulcer Incidence — 1.8%</span><span class="text-muted">Nat'l 2.7% · target &lt; 2.0%</span></div><div class="bar-track"><div class="bar-fill" style="width: 67%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>Physical Restraint Use — 0.4%</span><span class="text-muted">Nat'l 0.2% · target &lt; 0.5%</span></div><div class="bar-track"><div class="bar-fill" style="width: 80%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>Antipsychotic w/o Dx — 14.1%</span><span class="text-muted">Nat'l 14.3% · target &lt; 12%</span></div><div class="bar-track"><div class="bar-fill" style="width: 88%; background-color: var(--amber);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>Pain Management Compliance — 91%</span><span class="text-muted">target ≥ 90%</span></div><div class="bar-track"><div class="bar-fill" style="width: 91%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>Weight Loss &gt;5% in 30d — 4.2%</span><span class="text-muted">Nat'l 5.8% · target &lt; 5%</span></div><div class="bar-track"><div class="bar-fill" style="width: 42%; background-color: var(--green);"></div></div></div>
+                        <div class="bar-row"><div class="bar-label"><span>Catheter Prevalence — 11%</span><span class="text-muted">Nat'l 2.6% · target &lt; 7%</span></div><div class="bar-track"><div class="bar-fill" style="width: 100%; background-color: var(--red);"></div></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>PDPM Scoring Opportunities</h3><p>Case-mix adjustment review — potential upcoding accuracy based on MDS audit</p></div>
+                <div class="table-card">
+                    <table>
+                        <thead><tr><th>Category</th><th>Current Avg</th><th>Benchmark</th><th>Potential Uplift</th><th>Weekly $ Opportunity</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td>PT Component (TA-TP)</td><td>TC</td><td>TD</td><td>+1 level</td><td>$610/wk</td><td><button class="btn btn-sm">Audit</button></td></tr>
+                            <tr><td>OT Component</td><td>TC</td><td>TD</td><td>+1 level</td><td>$420/wk</td><td><button class="btn btn-sm">Audit</button></td></tr>
+                            <tr><td>Nursing (Extensive Services)</td><td>ES1</td><td>ES2</td><td>Reclassify 6 pts</td><td>$920/wk</td><td><button class="btn btn-sm">Audit</button></td></tr>
+                            <tr><td>SLP (Acute Neurologic)</td><td>SA</td><td>SE</td><td>Capture dysphagia Dx</td><td>$380/wk</td><td><button class="btn btn-sm">Audit</button></td></tr>
+                            <tr><td>NTA (Comorbidities)</td><td>NA</td><td>NB</td><td>Document full list</td><td>$520/wk</td><td><button class="btn btn-sm">Audit</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header"><h3>Active QAPI Performance Improvement Projects (PIPs)</h3></div>
+                <div class="feed-list">
+                    <div class="feed-item border-red"><div class="feed-time">🎯 PIP #1 · Falls Reduction</div>Goal: reduce facility falls rate from 2.3 → &lt; 2.0 by June 2026. Interventions: post-fall huddle within 24h, high-risk patient rounding Q2 at night, footwear audit, PT mobility reassessment Q14d.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">🎯 PIP #2 · Catheter Reduction</div>Goal: bring catheter prevalence from 11% → &lt; 7% by Q3 2026. Interventions: daily catheter necessity review, straight cath protocol, bladder scan before reinsertion.</div>
+                    <div class="feed-item border-amber"><div class="feed-time">🎯 PIP #3 · Antipsychotic Stewardship</div>Goal: antipsychotic use w/o Dx from 14.1% → &lt; 12% by Q3 2026. Interventions: behavioral care plan first, non-pharm interventions documented before PRN, GDR every 6 months.</div>
+                    <div class="feed-item border-green"><div class="feed-time">✅ PIP #4 · Rehospitalization</div>On track. Target met 3 consecutive months. Continue interventions: nurse-led triage, teach-back at discharge, TCM within 7 days.</div>
                 </div>
             </section>
         </div>
@@ -2362,7 +2849,7 @@ const fTagsData = [
 function showView(el, viewId) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     el.classList.add('active');
-    ['main-dashboard-view','survey-view','audit-view','automation-view','enforcement-view','readiness-view','poc-command-view','training-view'].forEach(id => {
+    ['main-dashboard-view','ai-insights-view','revenue-view','risk-flags-view','care-plans-view','medications-view','quality-metrics-view','survey-view','audit-view','automation-view','enforcement-view','readiness-view','poc-command-view','training-view'].forEach(id => {
         document.getElementById(id).style.display = id === viewId ? 'flex' : 'none';
     });
 }
