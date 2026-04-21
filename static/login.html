@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sign in · Apex Clinical Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+<div class="login-shell">
+    <div style="width:100%; max-width: 420px;">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="mark">🧬</div>
+                <div>
+                    <h1>Apex Clinical Intelligence</h1>
+                    <p>AI-Powered Clinical Command Center</p>
+                </div>
+            </div>
+
+            <form id="loginForm" class="login-form" autocomplete="on">
+                <div id="errBox" class="error" style="display:none;"></div>
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" autocomplete="username" required autofocus/>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required/>
+                </div>
+                <button id="submitBtn" type="submit">Sign in</button>
+                <div class="login-hint">
+                    Medical Director &amp; Administrator access only.<br/>
+                    Authorized clinical use.
+                </div>
+            </form>
+        </div>
+        <div class="login-footer">Apex Healthcare Advanced Medicine Division</div>
+    </div>
+</div>
+
+<script>
+const form   = document.getElementById('loginForm');
+const errBox = document.getElementById('errBox');
+const btn    = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errBox.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in…';
+    try {
+        const body = new URLSearchParams({
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value,
+        });
+        const r = await fetch('/auth/token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body,
+        });
+        if (!r.ok) {
+            const data = await r.json().catch(() => ({}));
+            throw new Error(data.detail || 'Invalid credentials');
+        }
+        const data = await r.json();
+        localStorage.setItem('apex_token', data.access_token);
+        localStorage.setItem('apex_user', JSON.stringify(data.user));
+        location.href = '/dashboard';
+    } catch (err) {
+        errBox.textContent = err.message || 'Sign-in failed';
+        errBox.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign in';
+    }
+});
+
+// if already signed in, skip login
+if (localStorage.getItem('apex_token')) {
+    fetch('/auth/me', {
+        headers: { Authorization: 'Bearer ' + localStorage.getItem('apex_token') },
+    }).then(r => { if (r.ok) location.href = '/dashboard'; });
+}
+</script>
+</body>
+</html>
